@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF‑8" />
+    <meta name="viewport" content="width=device‑width, initial‑scale=1.0" />
+    <title>Store – Life</title>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f5f5f5;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
+                sans-serif;
+        }
+        header {
+            background: #000;
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 3px rgba(0,0,0,.1);
+        }
+        header nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        header nav a {
+            color: #d4a373;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 12px 0;
+            transition: color .3s;
+            border-bottom: 2px solid transparent;
+        }
+        header nav a:hover,
+        header nav a.active {
+            color: #fff;
+            border-bottom-color: #d4a373;
+        }
+        .main {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
+            gap: 20px;
+        }
+        .product {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .product img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            background: #eee;
+        }
+        .product-info {
+            padding: 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .product-info h3 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .product-info .price {
+            font-weight: 700;
+            color: #d4a373;
+            margin-bottom: 12px;
+        }
+        .btn {
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background .3s, transform .2s;
+        }
+        .btn-buy {
+            background: linear-gradient(135deg,#d4a373 0%,#8b6f47 100%);
+            color: #fff;
+        }
+        .btn-buy:hover {
+            transform: scale(1.05);
+        }
+        .btn-donate {
+            background: #fff;
+            color: #d4a373;
+            border: 2px solid #d4a373;
+        }
+        .btn-donate:hover {
+            background: #fdfaf5;
+        }
+        @media (max-width:640px) {
+            header nav {
+                gap: 15px;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="active">Home</a>
+            <a href="profile.html">Profile</a>
+            <a href="about.html">About</a>
+            <a href="shop.html">Shop</a>
+            <a href="https://donate.stripe.com/7sIbMv2RY0ql02Q001">Donate</a>
+            <a href="settings.html" class="active">Settings</a>
+        </nav>
+    </header>
+
+    <div class="main">
+        <h1 style="margin-bottom:20px;color:#333;">Our Products</h1>
+        <div class="product-grid">
+            <div class="product">
+                <img src="https://t3.ftcdn.net/jpg/18/90/63/04/360_F_1890630459_ISAPHswy1yQArijCpqPumGlS7St06Hgo.jpg" alt="Cleanout">
+                <div class="product-info">
+                    <div>
+                        <h3>Cleanout</h3>
+                        <div class="price">Call for Quote</div>
+                    </div>
+                    <button class="btn btn-buy">Buy Now</button>
+                </div>
+            </div>
+            <div class="product">
+                <img src="https://img.freepik.com/free-vector/cleaners-with-cleaning-products-housekeeping-service_18591-52068.jpg?semt=ais_rp_progressive&w=740&q=80" alt="House Cleaning">
+                <div class="product-info">
+                    <div>
+                        <h3>House cleaning</h3>
+                        <div class="price">$35/hour</div>
+                    </div>
+                    <button class="btn btn-buy">Buy Now</button>
+                </div>
+            </div>
+            <div class="product">
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/002/394/822/small/project-studio-isometric-composition-illustration-vector.jpg" alt="Music studio">
+                <div class="product-info">
+                    <div>
+                        <h3>Music Studio</h3>
+                        <div class="price">$49.99/hour</div>
+                    </div>
+                    <!-- use the anchor itself as the styled button -->
+                    <a href="https://book.stripe.com/5kQcN41QqdsFdTpeZX2oE03"
+                       target="_blank" rel="noopener"
+                       class="btn btn-buy">
+                        Buy Now
+                    </a>
+                </div>
+            </div>
+            <!-- additional product cards as needed -->
+        </div>
+
+        <div style="text-align:center;margin-top:40px;">
+            <button class="btn btn-donate">
+                <i class="fas fa-heart"></i> Donate
+            </button>
+        </div>
+    </div>
+</body>
+</html>
