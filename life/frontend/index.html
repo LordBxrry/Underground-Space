@@ -120,6 +120,131 @@
             line-height: 1.4;
         }
 
+        .carousel {
+            position: relative;
+            margin: 0 auto 32px;
+            max-width: 1200px;
+        }
+
+        .product-slider {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding: 20px;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+        }
+
+        .product-slider::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .product-slider::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,.2);
+            border-radius: 4px;
+        }
+
+        .product-card {
+            min-width: 100%;
+            max-width: 100%;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .12);
+            overflow: hidden;
+            scroll-snap-align: start;
+            flex-shrink: 0;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(0,0,0,.55);
+            color: #fff;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: background .2s;
+        }
+
+        .carousel-nav:hover {
+            background: rgba(0,0,0,.75);
+        }
+
+        .carousel-nav:disabled {
+            opacity: .35;
+            cursor: default;
+        }
+
+        .carousel-nav.prev {
+            left: 12px;
+        }
+
+        .carousel-nav.next {
+            right: 12px;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(0,0,0,.25);
+            border: none;
+            cursor: pointer;
+            transition: background .2s, transform .2s;
+        }
+
+        .carousel-dot.active {
+            background: rgba(0,0,0,.65);
+            transform: scale(1.2);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            background: #eee;
+        }
+
+        .product-card .info {
+            padding: 14px 16px;
+        }
+
+        .product-card .title {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .product-card .price {
+            color: #d4a373;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .product-card .action {
+            display: block;
+            text-align: center;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: linear-gradient(135deg,#d4a373 0%,#8b6f47 100%);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
         @media (max-width: 992px) {
             .cols {
                 grid-template-columns: 1fr 1fr;
@@ -150,6 +275,46 @@
             <a href="settings.html" class="active">Settings</a>
         </nav>
     </header>
+
+    <section class="carousel" aria-label="Featured store products">
+        <button class="carousel-nav prev" type="button" aria-label="Previous product">‹</button>
+        <div class="product-slider" id="productSlider">
+            <div class="product-card">
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/002/394/822/small/project-studio-isometric-composition-illustration-vector.jpg" alt="Studio time">
+                <div class="info">
+                    <div class="title">Music Studio</div>
+                    <div class="price">$49.99/hour</div>
+                    <a href="shop.html" class="action">View in Shop</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://img.freepik.com/free-vector/cleaners-with-cleaning-products-housekeeping-service_18591-52068.jpg?semt=ais_rp_progressive&w=740&q=80" alt="House cleaning">
+                <div class="info">
+                    <div class="title">House cleaning</div>
+                    <div class="price">$35/hour</div>
+                    <a href="shop.html" class="action">View in Shop</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://t3.ftcdn.net/jpg/18/90/63/04/360_F_1890630459_ISAPHswy1yQArijCpqPumGlS7St06Hgo.jpg" alt="Cleanout">
+                <div class="info">
+                    <div class="title">Cleanout</div>
+                    <div class="price">Call for Quote</div>
+                    <a href="shop.html" class="action">View in Shop</a>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="https://images.pexels.com/photos/1149831/pexels-photo-1149831.jpeg?auto=compress&cs=tinysrgb&w=740" alt="Car cosmetics">
+                <div class="info">
+                    <div class="title">Car cosmetics</div>
+                    <div class="price">$79.99</div>
+                    <a href="shop.html" class="action">View in Shop</a>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-dots" id="carouselDots" aria-label="Carousel navigation"></div>
+        <button class="carousel-nav next" type="button" aria-label="Next product">›</button>
+    </section>
 
     <div class="main">
         <div class="cols">
@@ -196,5 +361,110 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const slider = document.getElementById('productSlider');
+        const prevButton = document.querySelector('.carousel-nav.prev');
+        const nextButton = document.querySelector('.carousel-nav.next');
+
+        function updateNav() {
+            if (!slider) return;
+            const maxScroll = slider.scrollWidth - slider.clientWidth;
+            prevButton.disabled = slider.scrollLeft <= 5;
+            nextButton.disabled = slider.scrollLeft >= maxScroll - 5;
+        }
+
+        function scrollByCard(direction) {
+            const card = slider.querySelector('.product-card');
+            if (!card) return;
+            const scrollAmount = card.getBoundingClientRect().width + 16;
+            slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+        }
+
+        const dotsContainer = document.getElementById('carouselDots');
+        const cards = Array.from(slider.querySelectorAll('.product-card'));
+        let autoplayTimer = null;
+
+        function setActiveDot(index) {
+            const dots = Array.from(dotsContainer.children);
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+        }
+
+        function goToSlide(index) {
+            const card = cards[index];
+            if (!card) return;
+            slider.scrollTo({ left: card.offsetLeft, behavior: 'smooth' });
+        }
+
+        function getCurrentIndex() {
+            const scrollLeft = slider.scrollLeft;
+            let bestIndex = 0;
+            let bestDistance = Infinity;
+            cards.forEach((card, i) => {
+                const distance = Math.abs(card.offsetLeft - scrollLeft);
+                if (distance < bestDistance) {
+                    bestDistance = distance;
+                    bestIndex = i;
+                }
+            });
+            return bestIndex;
+        }
+
+        function updateNav() {
+            if (!slider) return;
+            const maxScroll = slider.scrollWidth - slider.clientWidth;
+            prevButton.disabled = slider.scrollLeft <= 5;
+            nextButton.disabled = slider.scrollLeft >= maxScroll - 5;
+            setActiveDot(getCurrentIndex());
+        }
+
+        function scrollByCard(direction) {
+            const currentIndex = getCurrentIndex();
+            const nextIndex = Math.min(Math.max(currentIndex + direction, 0), cards.length - 1);
+            goToSlide(nextIndex);
+        }
+
+        function resetAutoplay() {
+            if (autoplayTimer) clearInterval(autoplayTimer);
+            autoplayTimer = setInterval(() => {
+                const currentIndex = getCurrentIndex();
+                const nextIndex = (currentIndex + 1) % cards.length;
+                goToSlide(nextIndex);
+            }, 5000);
+        }
+
+        function createDots() {
+            dotsContainer.innerHTML = '';
+            cards.forEach((_, idx) => {
+                const dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = 'carousel-dot';
+                dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
+                dot.addEventListener('click', () => {
+                    goToSlide(idx);
+                    resetAutoplay();
+                });
+                dotsContainer.appendChild(dot);
+            });
+        }
+
+        prevButton.addEventListener('click', () => {
+            scrollByCard(-1);
+            resetAutoplay();
+        });
+        nextButton.addEventListener('click', () => {
+            scrollByCard(1);
+            resetAutoplay();
+        });
+
+        slider.addEventListener('scroll', updateNav);
+        slider.addEventListener('mouseenter', () => clearInterval(autoplayTimer));
+        slider.addEventListener('mouseleave', resetAutoplay);
+        window.addEventListener('resize', updateNav);
+
+        createDots();
+        updateNav();
+        resetAutoplay();
+    </script>
 </body>
 </html>
